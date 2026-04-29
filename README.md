@@ -128,6 +128,54 @@ src/
 └── types/             # TypeScript型定義
 ```
 
+## 未完了の作業
+
+### 🔴 必須（機能として必要）
+
+1. **依存パッケージのインストール**
+   ```bash
+   npm install @radix-ui/react-select tsx
+   ```
+   管理者画面のSelectコンポーネントとseedスクリプトで必要です。
+
+2. **会話保存機能の実装**
+   - **対象ファイル**: `/src/app/(app)/chat/page.tsx`
+   - **内容**: チャット終了時にConversationをデータベースに保存
+   - **影響**: これがないと以下が機能しません
+     - 会話履歴に何も表示されない
+     - 統計データが集計されない
+     - フィードバックが保存されない
+   - **実装箇所**: `handleEndConversation()` 関数内でConversation作成
+
+### 🟡 推奨（完全性のため）
+
+3. **会話履歴機能の実装**
+   管理者画面のサイドバーに「会話履歴」リンクがありますが、以下のページが未実装：
+   - `/src/app/api/admin/conversations/route.ts` - 会話一覧API
+   - `/src/app/(admin)/conversations/page.tsx` - 会話一覧ページ
+   - `/src/app/(admin)/conversations/[id]/page.tsx` - 会話詳細ページ
+
+   実装パターンはユーザー管理（`/src/app/api/admin/users`）を参考にしてください。
+
+### 🟢 オプション
+
+4. **React Hooksの警告修正**
+   ビルド時に以下の警告が出ています：
+   - `/src/app/(admin)/users/[id]/page.tsx:52` - useEffect依存配列に`fetchUser`追加
+   - `/src/app/(admin)/users/page.tsx:32` - useEffect依存配列に`fetchUsers`追加
+
+5. **初期ユーザーの作成**
+   以下いずれかの方法で作成：
+   - 方法A: `npm run seed` を実行（環境変数が設定されている場合）
+   - 方法B: Supabaseダッシュボードから手動作成
+     1. Authentication → Users → Add user
+     2. `test@gmail.com` / `testkorea` を作成
+     3. `admin@gmail.com` / `adminkorea` を作成（Auto Confirm User: ON）
+     4. Prisma StudioまたはSQL EditorでUserテーブルに同じメールアドレスで登録
+     5. 管理者ユーザーの`role`を`ADMIN`に変更
+
+---
+
 ## 実装済み機能
 
 ### ✅ フロントエンド（全ページ実装完了）
