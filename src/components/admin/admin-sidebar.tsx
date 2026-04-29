@@ -9,7 +9,7 @@ const navItems = [
   { href: '/admin/dashboard', label: 'ダッシュボード', icon: LayoutDashboard },
   { href: '/admin/users', label: 'ユーザー管理', icon: Users },
   { href: '/admin/conversations', label: '会話履歴', icon: MessageSquare },
-  { href: '/admin/scenarios', label: 'シナリオ管理', icon: BookOpen },
+  { href: '/admin/scenario-stats', label: 'シナリオ統計', icon: BookOpen },
 ];
 
 export function AdminSidebar() {
