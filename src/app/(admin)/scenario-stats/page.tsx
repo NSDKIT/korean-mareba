@@ -2,6 +2,8 @@ import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/com
 import { scenarios } from '@/lib/data/scenarios';
 import { prisma } from '@/lib/prisma/client';
 
+export const dynamic = 'force-dynamic';
+
 async function getScenarioStats() {
   const stats = await Promise.all(
     Object.keys(scenarios).map(async (scenarioId) => {

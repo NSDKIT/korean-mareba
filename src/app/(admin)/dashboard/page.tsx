@@ -4,6 +4,8 @@ import { Badge } from '@/components/ui/badge';
 import { Users, MessageSquare, TrendingUp, Calendar } from 'lucide-react';
 import { scenarios } from '@/lib/data/scenarios';
 
+export const dynamic = 'force-dynamic';
+
 async function getStats() {
   const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL || 'http://localhost:3000'}/api/admin/stats`, {
     cache: 'no-store',
