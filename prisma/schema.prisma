@@ -1,0 +1,69 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id                    String         @id @default(cuid())
+  email                 String         @unique
+  level                 Int            @default(1) // 1〜5
+  plan                  Plan           @default(FREE)
+  stripeCustomerId      String?        @unique
+  stripeSubscriptionId  String?        @unique
+  createdAt             DateTime       @default(now())
+  updatedAt             DateTime       @updatedAt
+  conversations         Conversation[]
+  usageLogs             UsageLog[]
+  savedPhrases          SavedPhrase[]
+}
+
+model Conversation {
+  id         String    @id @default(cuid())
+  userId     String
+  scenarioId String
+  messages   Json // Message[]
+  score      Int?
+  feedback   Json? // FeedbackReport
+  duration   Int? // 秒
+  createdAt  DateTime  @default(now())
+  user       User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
+}
+
+model UsageLog {
+  id        String   @id @default(cuid())
+  userId    String
+  date      String // YYYY-MM-DD
+  count     Int      @default(0)
+  createdAt DateTime @default(now())
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, date])
+  @@index([userId, date])
+}
+
+model SavedPhrase {
+  id        String   @id @default(cuid())
+  userId    String
+  ko        String
+  ruby      String
+  ja        String
+  createdAt DateTime @default(now())
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
+}
+
+enum Plan {
+  FREE
+  STANDARD
+  PREMIUM
+}

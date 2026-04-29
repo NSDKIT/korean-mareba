@@ -1,0 +1,127 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;600;700&family=Noto+Sans+KR:wght@400;500;600;700&display=swap');
+
+@layer base {
+  :root {
+    /* Brand colors — dusty pastel + adult feminine */
+    --bg-canvas: #FBF8F4;
+    --bg-app: #FFFCF8;
+    --bg-card: #FFFFFF;
+    --bg-soft: #F6EFE9;
+    --bg-blush: #F9E8E4;
+    --bg-lilac: #ECE4F4;
+    --bg-mint: #E3EFE8;
+    --bg-cream: #F7EFD9;
+
+    /* Foregrounds */
+    --ink-1: #2A2230;
+    --ink-2: #5C4F65;
+    --ink-3: #8E8198;
+    --ink-4: #C8BFD0;
+
+    /* Accents — muted, adult */
+    --plum: #8B7AC7;
+    --plum-deep: #6F5DAB;
+    --plum-soft: #D9D1ED;
+    --rose: #D69AAE;
+    --rose-deep: #B97189;
+    --rose-soft: #F2DCE2;
+    --gold: #C8A36B;
+
+    /* Functional */
+    --success: #7BA88E;
+    --warn: #D9A14B;
+    --error: #C97A7A;
+
+    /* Radii */
+    --r-sm: 10px;
+    --r-md: 16px;
+    --r-lg: 22px;
+    --r-xl: 28px;
+    --r-pill: 999px;
+
+    /* Shadows */
+    --sh-sm: 0 2px 6px rgba(67, 47, 88, 0.06);
+    --sh-md: 0 6px 18px rgba(67, 47, 88, 0.08);
+    --sh-lg: 0 18px 40px rgba(67, 47, 88, 0.12);
+
+    /* Tailwind compatibility */
+    --background: 0 0% 99%;
+    --foreground: 280 15% 16%;
+    --card: 0 0% 100%;
+    --card-foreground: 280 15% 16%;
+    --popover: 0 0% 100%;
+    --popover-foreground: 280 15% 16%;
+    --primary: 258 40% 62%;
+    --primary-foreground: 0 0% 100%;
+    --secondary: 31 33% 91%;
+    --secondary-foreground: 280 15% 16%;
+    --muted: 31 33% 91%;
+    --muted-foreground: 280 10% 54%;
+    --accent: 31 33% 91%;
+    --accent-foreground: 280 15% 16%;
+    --destructive: 0 40% 62%;
+    --destructive-foreground: 0 0% 100%;
+    --border: 280 15% 80%;
+    --input: 280 15% 80%;
+    --ring: 258 40% 62%;
+    --radius: 1rem;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+    box-sizing: border-box;
+  }
+
+  body {
+    margin: 0;
+    font-family: 'Noto Sans JP', 'Hiragino Sans', system-ui, sans-serif;
+    color: var(--ink-1);
+    background: var(--bg-canvas);
+    -webkit-font-smoothing: antialiased;
+    font-feature-settings: "palt";
+  }
+
+  [lang="ko"] {
+    font-family: 'Noto Sans KR', 'Noto Sans JP', system-ui, sans-serif;
+  }
+}
+
+@layer utilities {
+  /* Animations */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(8px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  .fade-up {
+    animation: fadeUp .35s ease both;
+  }
+
+  @keyframes pulseRing {
+    0% { box-shadow: 0 0 0 0 rgba(139,122,199,.4); }
+    70% { box-shadow: 0 0 0 18px rgba(139,122,199,0); }
+    100% { box-shadow: 0 0 0 0 rgba(139,122,199,0); }
+  }
+  .pulse-ring {
+    animation: pulseRing 1.6s infinite;
+  }
+
+  @keyframes typing {
+    0%, 60%, 100% { opacity: 0.3; transform: translateY(0); }
+    30% { opacity: 1; transform: translateY(-3px); }
+  }
+  .typing-dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: var(--plum);
+    animation: typing 1.2s infinite;
+  }
+  .typing-dot:nth-child(2) { animation-delay: .15s; }
+  .typing-dot:nth-child(3) { animation-delay: .3s; }
+}
