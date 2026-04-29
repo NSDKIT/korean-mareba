@@ -102,35 +102,77 @@ src/
 └── types/             # TypeScript型定義
 ```
 
-## 次のステップ
+## 実装済み機能
 
-### 実装が必要な項目
+### ✅ フロントエンド（全ページ実装完了）
 
-1. **認証ページ（ログイン・サインアップ）**
-   - Supabase Auth を使った認証フロー
-   - メールアドレス＋パスワード認証
-   - 新規ユーザー登録時に Prisma でユーザー作成
+1. **認証ページ**
+   - ログイン画面 (`/login`)
+   - サインアップ画面 (`/signup`)
+   - Supabase Auth統合済み
 
-2. **ホーム画面と場面選択**
-   - ユーザーのレベルと利用可能回数の表示
-   - 場面カード一覧（カフェ、友達、ビジネス等）
-   - 場面プレビュー画面
+2. **メインアプリ画面**
+   - ホーム画面 (`/home`) - 統計表示、おすすめ場面
+   - 場面選択 (`/scenarios`) - カフェ、友達、ビジネス等の場面一覧
+   - 場面プレビュー (`/preview`) - 場面詳細とフレーズ例
+   - 会話画面 (`/chat`) - AI会話、音声入力/TTS再生
+   - フィードバック (`/feedback`) - 会話後の詳細評価
+   - 学習履歴 (`/history`) - 過去の会話履歴と統計
+   - 設定 (`/settings`) - プラン管理、アカウント情報
 
-3. **会話画面（チャットUI）**
-   - Vercel AI SDK の useChat フックを使用
-   - チャットバブル表示
-   - マイクボタン（Web Speech API）
-   - TTS 再生ボタン
-   - 会話終了時のフィードバック表示
+3. **UIコンポーネント**
+   - モックアップデザインに基づくカスタムデザインシステム
+   - Button, Card, Input, Badge, Progress等のコンポーネント
+   - Dusty pastel カラーパレット + pill-shaped デザイン
 
-4. **設定画面**
-   - プラン管理（Stripe チェックアウト）
-   - アカウント情報
-   - 学習履歴・統計
+### ✅ バックエンド（全API実装完了）
 
-5. **shadcn/ui コンポーネントの追加**
-   - 必要に応じて shadcn/ui から UI コンポーネントを追加
-   - `npx shadcn@latest add button card input` 等
+1. **AI会話API** (`/api/chat`)
+   - GPT-4o / GPT-4o-mini による会話生成
+   - プランとレベルに応じたモデル選択
+   - Vercel AI SDK によるストリーミング対応
+
+2. **音声TTS API** (`/api/tts`)
+   - Gemini 2.5 Flash/Pro TTS
+   - 場面別ボイス設定
+
+3. **プレースメントテストAPI** (`/api/placement`)
+   - GPT-4o-mini によるレベル判定
+
+4. **Stripe決済API**
+   - チェックアウトセッション作成 (`/api/stripe/create-checkout`)
+   - Webhook処理 (`/api/stripe/webhook`)
+
+### ✅ インフラ・設計
+
+1. **環境変数管理**
+   - 環境変数なしでもビルド可能
+   - 実行時に環境変数をチェックし、不足時はエラー表示
+   - Vercelデプロイ対応
+
+2. **データベース**
+   - Prismaスキーマ定義済み
+   - ユーザー、会話、フィードバックテーブル
+
+3. **状態管理**
+   - Zustandによるユーザー状態管理
+
+## デプロイ手順
+
+### 1. GitHubリポジトリ
+すでにプッシュ済み: https://github.com/NSDKIT/korean-mareba
+
+### 2. Vercelデプロイ
+1. https://vercel.com でGitHubリポジトリをインポート
+2. 環境変数を設定（`.env.example`参照）
+3. デプロイ実行
+
+### 3. 必須の外部サービス設定
+- Supabase（認証・DB）
+- Upstash Redis（使用制限管理）
+- OpenAI（AI会話）
+- Google AI / Gemini（TTS）
+- Stripe（決済）
 
 ## プラン設計
 
