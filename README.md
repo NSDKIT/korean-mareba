@@ -52,7 +52,13 @@ cp .env.example .env.local
 
 ### 3. データベースのセットアップ
 
-Prismaを使ってデータベーススキーマをプッシュします。
+Prismaマイグレーションを実行します。
+
+```bash
+npx prisma migrate dev
+```
+
+または、開発環境でスキーマを直接プッシュする場合：
 
 ```bash
 npm run db:push
@@ -64,7 +70,27 @@ Prisma Clientを生成します。
 npm run db:generate
 ```
 
-### 4. 開発サーバーの起動
+### 4. 初期ユーザーの作成
+
+テストユーザーと管理者ユーザーを作成するスクリプトを実行します。
+
+```bash
+npm run seed
+```
+
+以下のユーザーが作成されます：
+- **テストユーザー**: `test@gmail.com` / パスワード: `testkorea`
+- **管理者ユーザー**: `admin@gmail.com` / パスワード: `adminkorea`
+
+または、Prisma Studioを使って手動で作成することもできます：
+
+```bash
+npm run db:studio
+```
+
+管理者権限を付与する場合は、Userテーブルで該当ユーザーの `role` を `ADMIN` に変更してください。
+
+### 5. 開発サーバーの起動
 
 ```bash
 npm run dev
@@ -120,9 +146,15 @@ src/
    - 学習履歴 (`/history`) - 過去の会話履歴と統計
    - 設定 (`/settings`) - プラン管理、アカウント情報
 
-3. **UIコンポーネント**
+3. **管理者画面** 🆕
+   - ダッシュボード (`/admin/dashboard`) - 統計情報の可視化
+   - ユーザー管理 (`/admin/users`) - ユーザー一覧・詳細・編集・削除
+   - シナリオ管理 (`/admin/scenarios`) - シナリオ別統計表示
+   - 権限管理 - Middleware による ADMIN ロールチェック
+
+4. **UIコンポーネント**
    - モックアップデザインに基づくカスタムデザインシステム
-   - Button, Card, Input, Badge, Progress等のコンポーネント
+   - Button, Card, Input, Badge, Progress, Select, Label等のコンポーネント
    - Dusty pastel カラーパレット + pill-shaped デザイン
 
 ### ✅ バックエンド（全API実装完了）
@@ -143,18 +175,30 @@ src/
    - チェックアウトセッション作成 (`/api/stripe/create-checkout`)
    - Webhook処理 (`/api/stripe/webhook`)
 
+5. **管理者API** 🆕
+   - 統計データ取得 (`/api/admin/stats`)
+   - ユーザー管理 (`/api/admin/users`, `/api/admin/users/[id]`)
+   - 全API で `getAdminUser()` による権限チェック実施
+
 ### ✅ インフラ・設計
 
 1. **環境変数管理**
    - 環境変数なしでもビルド可能
    - 実行時に環境変数をチェックし、不足時はエラー表示
    - Vercelデプロイ対応
+   - DEMO_MODE による開発時の認証スキップ機能
 
 2. **データベース**
    - Prismaスキーマ定義済み
-   - ユーザー、会話、フィードバックテーブル
+   - ユーザー（User.role フィールド追加）、会話、フィードバック、使用ログテーブル
+   - パフォーマンス最適化のためのインデックス追加
 
-3. **状態管理**
+3. **認証・権限管理**
+   - Supabase Auth + Prisma のハイブリッド認証
+   - Middleware による `/admin` 配下の自動権限チェック
+   - Role-Based Access Control (RBAC) 実装
+
+4. **状態管理**
    - Zustandによるユーザー状態管理
 
 ## デプロイ手順
@@ -197,9 +241,31 @@ npm start
 # Prisma Studio（データベースGUI）起動
 npm run db:studio
 
-# Prisma マイグレーション生成
+# Prisma マイグレーション実行
+npx prisma migrate dev
+
+# Prisma スキーマをDBにプッシュ（開発環境）
 npm run db:push
+
+# Prisma Client 生成
+npm run db:generate
+
+# 初期ユーザー作成
+npm run seed
 ```
+
+## 管理者画面へのアクセス
+
+管理者アカウント（`admin@gmail.com`）でログイン後、以下のURLにアクセスしてください：
+
+```
+http://localhost:3000/admin/dashboard
+```
+
+管理者画面では以下の機能が利用できます：
+- **ダッシュボード**: ユーザー数、会話数、プラン別統計などの可視化
+- **ユーザー管理**: 全ユーザーの一覧、詳細表示、Level/Plan/Role の編集、削除
+- **シナリオ管理**: シナリオ別の使用統計（会話数、平均スコア）
 
 ## 参考リソース
 

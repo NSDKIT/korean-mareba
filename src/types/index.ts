@@ -1,6 +1,6 @@
-import { Plan } from '@prisma/client';
+import { Plan, Role } from '@prisma/client';
 
-export type { Plan };
+export type { Plan, Role };
 
 export interface Message {
   role: 'user' | 'assistant' | 'system';
@@ -52,6 +52,7 @@ export interface FeedbackReport {
 export interface UserProfile {
   id: string;
   email: string;
+  role: Role;
   level: number;
   plan: Plan;
   stripeCustomerId?: string;

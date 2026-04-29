@@ -47,6 +47,7 @@ export async function getUser(): Promise<UserProfile | null> {
   return {
     id: profile.id,
     email: profile.email,
+    role: profile.role,
     level: profile.level,
     plan: profile.plan,
     stripeCustomerId: profile.stripeCustomerId ?? undefined,
@@ -54,4 +55,12 @@ export async function getUser(): Promise<UserProfile | null> {
     createdAt: profile.createdAt,
     updatedAt: profile.updatedAt,
   };
+}
+
+export async function getAdminUser(): Promise<UserProfile> {
+  const user = await getUser();
+  if (!user || user.role !== 'ADMIN') {
+    throw new Error('Unauthorized: Admin access required');
+  }
+  return user;
 }

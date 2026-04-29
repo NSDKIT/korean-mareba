@@ -13,6 +13,7 @@ datasource db {
 model User {
   id                    String         @id @default(cuid())
   email                 String         @unique
+  role                  Role           @default(USER)
   level                 Int            @default(1) // 1〜5
   plan                  Plan           @default(FREE)
   stripeCustomerId      String?        @unique
@@ -22,6 +23,10 @@ model User {
   conversations         Conversation[]
   usageLogs             UsageLog[]
   savedPhrases          SavedPhrase[]
+
+  @@index([plan])
+  @@index([level])
+  @@index([createdAt])
 }
 
 model Conversation {
@@ -36,6 +41,9 @@ model Conversation {
   user       User      @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   @@index([userId])
+  @@index([scenarioId])
+  @@index([createdAt])
+  @@index([score])
 }
 
 model UsageLog {
@@ -66,4 +74,9 @@ enum Plan {
   FREE
   STANDARD
   PREMIUM
+}
+
+enum Role {
+  USER
+  ADMIN
 }
