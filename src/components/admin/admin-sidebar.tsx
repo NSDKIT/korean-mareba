@@ -3,7 +3,7 @@
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { cn } from '@/lib/utils';
-import { LayoutDashboard, Users, MessageSquare, BookOpen, Home } from 'lucide-react';
+import { LayoutDashboard, Users, MessageSquare, BookOpen } from 'lucide-react';
 
 const navItems = [
   { href: '/admin/dashboard', label: 'ダッシュボード', icon: LayoutDashboard },
@@ -18,16 +18,6 @@ export function AdminSidebar() {
   return (
     <aside className="fixed left-0 top-14 h-[calc(100vh-3.5rem)] w-64 border-r bg-white">
       <nav className="p-4 space-y-2">
-        <Link
-          href="/home"
-          className="flex items-center gap-3 px-3 py-2 rounded-lg text-sm text-muted-foreground hover:bg-muted"
-        >
-          <Home className="h-4 w-4" />
-          アプリに戻る
-        </Link>
-
-        <div className="h-px bg-border my-4" />
-
         {navItems.map((item) => {
           const Icon = item.icon;
           const isActive = pathname.startsWith(item.href);

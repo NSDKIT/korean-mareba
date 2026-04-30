@@ -37,20 +37,40 @@ export default function LoginPage() {
         // Cookieにモックユーザーを保存
         document.cookie = `demo_user_email=${email}; path=/; max-age=86400`;
 
-        router.push("/home");
+        // ロール別にリダイレクト
+        if (email === "admin@gmail.com") {
+          router.push("/admin/dashboard");
+        } else {
+          router.push("/home");
+        }
         router.refresh();
         return;
       }
 
       const supabase = createClient();
-      const { error: signInError } = await supabase.auth.signInWithPassword({
+      const { error: signInError, data } = await supabase.auth.signInWithPassword({
         email,
         password,
       });
 
       if (signInError) throw signInError;
 
-      router.push("/home");
+      // ロールをチェックしてリダイレクト先を決定
+      if (data.user) {
+        const response = await fetch(`/api/user`);
+        if (response.ok) {
+          const userData = await response.json();
+          if (userData.role === 'ADMIN') {
+            router.push("/admin/dashboard");
+          } else {
+            router.push("/home");
+          }
+        } else {
+          router.push("/home");
+        }
+      } else {
+        router.push("/home");
+      }
       router.refresh();
     } catch (err: any) {
       setError(err.message || "ログインに失敗しました");
@@ -68,20 +88,41 @@ export default function LoginPage() {
       if (isDevelopment) {
         // Cookieにモックユーザーを保存
         document.cookie = `demo_user_email=${userEmail}; path=/; max-age=86400`;
-        router.push("/home");
+
+        // ロール別にリダイレクト
+        if (userEmail === "admin@gmail.com") {
+          router.push("/admin/dashboard");
+        } else {
+          router.push("/home");
+        }
         router.refresh();
         return;
       }
 
       const supabase = createClient();
-      const { error: signInError } = await supabase.auth.signInWithPassword({
+      const { error: signInError, data } = await supabase.auth.signInWithPassword({
         email: userEmail,
         password: userPassword,
       });
 
       if (signInError) throw signInError;
 
-      router.push("/home");
+      // ロールをチェックしてリダイレクト先を決定
+      if (data.user) {
+        const response = await fetch(`/api/user`);
+        if (response.ok) {
+          const userData = await response.json();
+          if (userData.role === 'ADMIN') {
+            router.push("/admin/dashboard");
+          } else {
+            router.push("/home");
+          }
+        } else {
+          router.push("/home");
+        }
+      } else {
+        router.push("/home");
+      }
       router.refresh();
     } catch (err: any) {
       setError(err.message || "ログインに失敗しました");
