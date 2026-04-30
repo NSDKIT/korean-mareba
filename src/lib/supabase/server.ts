@@ -32,6 +32,42 @@ export async function createClient() {
 }
 
 export async function getUser(): Promise<UserProfile | null> {
+  // DEMO MODE: モックユーザーを返す
+  const isDemoMode = process.env.NEXT_PUBLIC_DEMO_MODE === 'true';
+  if (isDemoMode) {
+    const cookieStore = await cookies();
+    const demoUserEmail = cookieStore.get('demo_user_email')?.value;
+
+    if (!demoUserEmail) return null;
+
+    // モックユーザー情報を返す
+    if (demoUserEmail === 'test@gmail.com') {
+      return {
+        id: 'demo-test-user-id',
+        email: 'test@gmail.com',
+        role: 'USER',
+        level: 3,
+        plan: 'FREE',
+        createdAt: new Date(),
+        updatedAt: new Date(),
+      };
+    }
+
+    if (demoUserEmail === 'admin@gmail.com') {
+      return {
+        id: 'demo-admin-user-id',
+        email: 'admin@gmail.com',
+        role: 'ADMIN',
+        level: 5,
+        plan: 'PREMIUM',
+        createdAt: new Date(),
+        updatedAt: new Date(),
+      };
+    }
+
+    return null;
+  }
+
   const supabase = await createClient();
   const { data: { user } } = await supabase.auth.getUser();
 

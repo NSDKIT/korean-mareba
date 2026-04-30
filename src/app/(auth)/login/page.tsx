@@ -21,6 +21,27 @@ export default function LoginPage() {
     setError("");
 
     try {
+      // DEMO MODE: モックログイン
+      if (isDevelopment) {
+        // モックユーザーの認証チェック
+        const validUsers = [
+          { email: "test@gmail.com", password: "testkorea" },
+          { email: "admin@gmail.com", password: "adminkorea" },
+        ];
+
+        const user = validUsers.find(u => u.email === email && u.password === password);
+        if (!user) {
+          throw new Error("メールアドレスまたはパスワードが正しくありません");
+        }
+
+        // Cookieにモックユーザーを保存
+        document.cookie = `demo_user_email=${email}; path=/; max-age=86400`;
+
+        router.push("/home");
+        router.refresh();
+        return;
+      }
+
       const supabase = createClient();
       const { error: signInError } = await supabase.auth.signInWithPassword({
         email,
@@ -43,6 +64,15 @@ export default function LoginPage() {
     setError("");
 
     try {
+      // DEMO MODE: モックログイン
+      if (isDevelopment) {
+        // Cookieにモックユーザーを保存
+        document.cookie = `demo_user_email=${userEmail}; path=/; max-age=86400`;
+        router.push("/home");
+        router.refresh();
+        return;
+      }
+
       const supabase = createClient();
       const { error: signInError } = await supabase.auth.signInWithPassword({
         email: userEmail,

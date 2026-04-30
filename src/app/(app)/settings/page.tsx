@@ -74,6 +74,15 @@ export default function SettingsPage() {
   };
 
   const handleLogout = async () => {
+    // DEMO MODE: cookieを削除
+    const isDemoMode = process.env.NEXT_PUBLIC_DEMO_MODE === "true";
+    if (isDemoMode) {
+      document.cookie = "demo_user_email=; path=/; max-age=0";
+      router.push("/login");
+      router.refresh();
+      return;
+    }
+
     const supabase = createClient();
     await supabase.auth.signOut();
     router.push("/login");
