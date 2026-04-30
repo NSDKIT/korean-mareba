@@ -9,7 +9,7 @@ export function AdminHeader() {
 
   return (
     <header className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur h-14">
-      <div className="container flex h-full items-center justify-between">
+      <div className="container mx-auto px-4 flex h-full items-center justify-between">
         <div className="flex items-center space-x-4">
           <h1 className="text-lg font-bold">말해봐 管理画面</h1>
           <Badge variant="default">

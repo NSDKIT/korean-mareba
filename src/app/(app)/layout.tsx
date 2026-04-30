@@ -11,7 +11,7 @@ export default function AppLayout({
     <UserProvider>
       <div className="min-h-screen pb-16">
         <Header />
-        <main className="container py-6">{children}</main>
+        <main className="container mx-auto py-6 px-4">{children}</main>
         <TabBar />
       </div>
     </UserProvider>
