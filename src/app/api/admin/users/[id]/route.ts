@@ -11,6 +11,52 @@ export async function GET(
   try {
     await getAdminUser();
 
+    // DEMO MODE: モックデータを返す
+    const isDemoMode = process.env.NEXT_PUBLIC_DEMO_MODE === 'true';
+    if (isDemoMode) {
+      const mockUserData: Record<string, any> = {
+        'demo-test-user-id': {
+          id: 'demo-test-user-id',
+          email: 'test@gmail.com',
+          role: 'USER',
+          level: 3,
+          plan: 'FREE',
+          createdAt: new Date('2024-04-15'),
+          updatedAt: new Date('2024-05-01'),
+          conversations: [],
+          savedPhrases: [],
+          _count: { conversations: 12, savedPhrases: 5 },
+        },
+        'demo-admin-user-id': {
+          id: 'demo-admin-user-id',
+          email: 'admin@gmail.com',
+          role: 'ADMIN',
+          level: 5,
+          plan: 'PREMIUM',
+          createdAt: new Date('2024-01-01'),
+          updatedAt: new Date('2024-05-01'),
+          conversations: [],
+          savedPhrases: [],
+          _count: { conversations: 45, savedPhrases: 23 },
+        },
+      };
+
+      const user = mockUserData[params.id];
+      if (!user) {
+        return new Response('User not found', { status: 404 });
+      }
+
+      return NextResponse.json({
+        user,
+        stats: {
+          totalConversations: user._count.conversations,
+          averageScore: 82,
+          totalDuration: 3600,
+          savedPhrasesCount: user._count.savedPhrases,
+        },
+      });
+    }
+
     const user = await prisma.user.findUnique({
       where: { id: params.id },
       include: {
@@ -73,6 +119,18 @@ export async function PUT(
     const body = await req.json();
     const { level, plan, role } = body;
 
+    // DEMO MODE: モック更新（実際には更新しない）
+    const isDemoMode = process.env.NEXT_PUBLIC_DEMO_MODE === 'true';
+    if (isDemoMode) {
+      return NextResponse.json({
+        id: params.id,
+        level: level ?? 3,
+        plan: plan ?? 'FREE',
+        role: role ?? 'USER',
+        message: 'DEMO MODE: 更新はシミュレートされました',
+      });
+    }
+
     const updateData: any = {};
     if (level !== undefined) updateData.level = level;
     if (plan !== undefined) updateData.plan = plan;
@@ -96,6 +154,15 @@ export async function DELETE(
 ) {
   try {
     await getAdminUser();
+
+    // DEMO MODE: モック削除（実際には削除しない）
+    const isDemoMode = process.env.NEXT_PUBLIC_DEMO_MODE === 'true';
+    if (isDemoMode) {
+      return NextResponse.json({
+        success: true,
+        message: 'DEMO MODE: 削除はシミュレートされました',
+      });
+    }
 
     await prisma.user.delete({
       where: { id: params.id },

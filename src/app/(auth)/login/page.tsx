@@ -36,11 +36,14 @@ export default function LoginPage() {
 
         // Cookieにモックユーザーを保存
         document.cookie = `demo_user_email=${email}; path=/; max-age=86400`;
+        console.log('[Login] Cookie set:', document.cookie);
 
         // ロール別にリダイレクト
         if (email === "admin@gmail.com") {
+          console.log('[Login] Redirecting to /admin/dashboard');
           router.push("/admin/dashboard");
         } else {
+          console.log('[Login] Redirecting to /home');
           router.push("/home");
         }
         router.refresh();
@@ -88,11 +91,14 @@ export default function LoginPage() {
       if (isDevelopment) {
         // Cookieにモックユーザーを保存
         document.cookie = `demo_user_email=${userEmail}; path=/; max-age=86400`;
+        console.log('[Quick Login] Cookie set:', document.cookie);
 
         // ロール別にリダイレクト
         if (userEmail === "admin@gmail.com") {
+          console.log('[Quick Login] Redirecting to /admin/dashboard');
           router.push("/admin/dashboard");
         } else {
+          console.log('[Quick Login] Redirecting to /home');
           router.push("/home");
         }
         router.refresh();

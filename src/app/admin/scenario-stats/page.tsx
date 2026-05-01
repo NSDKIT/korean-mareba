@@ -5,6 +5,24 @@ import { prisma } from '@/lib/prisma/client';
 export const dynamic = 'force-dynamic';
 
 async function getScenarioStats() {
+  // DEMO MODE: モックデータを返す
+  const isDemoMode = process.env.NEXT_PUBLIC_DEMO_MODE === 'true';
+  if (isDemoMode) {
+    const mockStats: Record<string, { conversationCount: number; averageScore: number }> = {
+      'cafe-order': { conversationCount: 342, averageScore: 78 },
+      'hotel-checkin': { conversationCount: 298, averageScore: 82 },
+      'shopping': { conversationCount: 267, averageScore: 75 },
+      'restaurant': { conversationCount: 189, averageScore: 80 },
+      'taxi': { conversationCount: 151, averageScore: 73 },
+    };
+
+    return Object.keys(scenarios).map((scenarioId) => ({
+      scenarioId,
+      conversationCount: mockStats[scenarioId]?.conversationCount || 0,
+      averageScore: mockStats[scenarioId]?.averageScore || 0,
+    }));
+  }
+
   const stats = await Promise.all(
     Object.keys(scenarios).map(async (scenarioId) => {
       const [count, avgScore] = await Promise.all([

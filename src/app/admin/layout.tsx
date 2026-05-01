@@ -1,19 +1,11 @@
-import { getAdminUser } from '@/lib/supabase/server';
-import { redirect } from 'next/navigation';
 import { AdminHeader } from '@/components/admin/admin-header';
 import { AdminSidebar } from '@/components/admin/admin-sidebar';
 
-export default async function AdminLayout({
+export default function AdminLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
-  try {
-    await getAdminUser();
-  } catch {
-    redirect('/home');
-  }
-
   return (
     <div className="min-h-screen bg-[var(--bg-app)]">
       <AdminHeader />
