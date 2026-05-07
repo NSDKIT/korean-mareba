@@ -119,7 +119,7 @@ export default function HomePage() {
       </div>
 
       {/* カテゴリーで探す */}
-      <div className="px-5 pt-5 pb-24">
+      <div className="px-5 pt-5 pb-20">
         <div className="max-w-2xl mx-auto">
           <div className="flex items-baseline justify-between mb-3">
             <div className="text-base font-bold">カテゴリーで探す</div>

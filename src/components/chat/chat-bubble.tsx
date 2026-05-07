@@ -20,14 +20,14 @@ export function ChatBubble({ role, content, onPlayAudio, isPlaying }: ChatBubble
     >
       <div
         className={cn(
-          "max-w-[75%] rounded-[20px] px-4 py-3 shadow-[var(--sh-sm)]",
+          "max-w-[85%] md:max-w-[75%] rounded-[20px] px-3 md:px-4 py-2.5 md:py-3 shadow-[var(--sh-sm)]",
           isUser
             ? "bg-gradient-to-br from-[var(--plum)] to-[var(--plum-deep)] text-white"
             : "bg-white text-[var(--ink-1)]"
         )}
       >
         <div className="flex items-start gap-2">
-          <p className="text-[15px] leading-relaxed whitespace-pre-wrap break-words">{content}</p>
+          <p className="text-sm md:text-[15px] leading-relaxed whitespace-pre-wrap break-words">{content}</p>
           {!isUser && onPlayAudio && (
             <button
               onClick={onPlayAudio}

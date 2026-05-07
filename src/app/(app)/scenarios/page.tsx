@@ -27,10 +27,10 @@ export default function ScenariosPage() {
   };
 
   return (
-    <div className="space-y-6">
-      <div className="space-y-2">
-        <h1 className="text-3xl font-bold">場面を選ぶ</h1>
-        <p className="text-muted-foreground">
+    <div className="space-y-4 md:space-y-6">
+      <div className="space-y-1 md:space-y-2">
+        <h1 className="text-xl md:text-3xl font-bold">場面を選ぶ</h1>
+        <p className="text-sm md:text-base text-muted-foreground">
           練習したい場面を選んでください
         </p>
       </div>

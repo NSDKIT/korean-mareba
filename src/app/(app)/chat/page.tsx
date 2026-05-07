@@ -137,33 +137,35 @@ function ChatPageContent() {
   }
 
   return (
-    <div className="flex flex-col h-[calc(100vh-8rem)]">
+    <div className="flex flex-col h-[calc(100vh-14rem)] md:h-[calc(100vh-10rem)]">
       {/* ヘッダー */}
-      <div className="flex items-center justify-between mb-4">
+      <div className="flex items-center justify-between mb-3 md:mb-4 gap-2">
         <Button
           variant="ghost"
           size="sm"
           onClick={() => router.push("/scenarios")}
+          className="flex-shrink-0"
         >
-          <ArrowLeft className="mr-2 h-4 w-4" />
-          終了
+          <ArrowLeft className="h-4 w-4 md:mr-2" />
+          <span className="hidden md:inline">終了</span>
         </Button>
-        <div className="text-center">
-          <h2 className="font-semibold">{scenario.name}</h2>
-          <p className="text-xs text-muted-foreground">{scenario.nameKo}</p>
+        <div className="text-center flex-1 min-w-0">
+          <h2 className="font-semibold text-sm md:text-base truncate">{scenario.name}</h2>
+          <p className="text-xs text-muted-foreground hidden sm:block">{scenario.nameKo}</p>
         </div>
         <Button
           variant="outline"
           size="sm"
           onClick={handleEndConversation}
           disabled={messages.length < 2}
+          className="flex-shrink-0 text-xs md:text-sm"
         >
-          会話終了
+          <span className="hidden sm:inline">会話</span>終了
         </Button>
       </div>
 
       {/* メッセージエリア */}
-      <Card className="flex-1 overflow-y-auto p-4 mb-4">
+      <Card className="flex-1 overflow-y-auto p-3 md:p-4 mb-3 md:mb-4">
         {messages.length === 0 && (
           <div className="flex h-full items-center justify-center text-center">
             <div className="space-y-2">

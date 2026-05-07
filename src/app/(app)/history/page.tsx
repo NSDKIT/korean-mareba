@@ -63,16 +63,16 @@ export default function HistoryPage() {
   };
 
   return (
-    <div className="space-y-6">
-      <div className="space-y-2">
-        <h1 className="text-3xl font-bold">学習履歴</h1>
-        <p className="text-muted-foreground">
+    <div className="space-y-4 md:space-y-6">
+      <div className="space-y-1 md:space-y-2">
+        <h1 className="text-xl md:text-3xl font-bold">学習履歴</h1>
+        <p className="text-sm md:text-base text-muted-foreground">
           これまでの会話練習を振り返りましょう
         </p>
       </div>
 
       {/* 統計カード */}
-      <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
+      <div className="grid gap-3 md:gap-4 grid-cols-2 lg:grid-cols-4">
         <Card>
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
             <CardTitle className="text-sm font-medium">総会話数</CardTitle>
@@ -154,14 +154,14 @@ export default function HistoryPage() {
                 return (
                   <div
                     key={conversation.id}
-                    className="flex items-center justify-between rounded-lg border p-4 hover:bg-muted/50 transition-colors cursor-pointer"
+                    className="flex items-center justify-between rounded-lg border p-3 md:p-4 hover:bg-muted/50 transition-colors cursor-pointer"
                     onClick={() =>
                       router.push(`/feedback?id=${conversation.id}`)
                     }
                   >
-                    <div className="space-y-1 flex-1">
+                    <div className="space-y-1 flex-1 min-w-0">
                       <div className="flex items-center gap-2">
-                        <p className="font-semibold">{scenario.name}</p>
+                        <p className="font-semibold text-sm md:text-base truncate">{scenario.name}</p>
                         <Badge
                           variant={
                             conversation.score >= 80
@@ -170,16 +170,17 @@ export default function HistoryPage() {
                               ? "secondary"
                               : "outline"
                           }
+                          className="flex-shrink-0"
                         >
                           {conversation.score}点
                         </Badge>
                       </div>
-                      <div className="flex items-center gap-4 text-sm text-muted-foreground">
+                      <div className="flex items-center gap-2 md:gap-4 text-xs md:text-sm text-muted-foreground flex-wrap">
                         <span>{formatDate(conversation.date)}</span>
-                        <span>•</span>
+                        <span className="hidden sm:inline">•</span>
                         <span>{formatDuration(conversation.duration)}</span>
-                        <span>•</span>
-                        <span>{conversation.messageCount}メッセージ</span>
+                        <span className="hidden md:inline">•</span>
+                        <span className="hidden md:inline">{conversation.messageCount}メッセージ</span>
                       </div>
                     </div>
                   </div>

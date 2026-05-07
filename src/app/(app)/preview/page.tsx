@@ -60,11 +60,12 @@ function PreviewPageContent() {
   };
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-4 md:space-y-6">
       <Button
         variant="ghost"
         onClick={() => router.push("/scenarios")}
-        className="mb-4"
+        className="mb-2 md:mb-4"
+        size="sm"
       >
         <ArrowLeft className="mr-2 h-4 w-4" />
         場面選択に戻る
@@ -72,8 +73,8 @@ function PreviewPageContent() {
 
       <div className="space-y-4">
         <div>
-          <h1 className="text-3xl font-bold">{scenario.name}</h1>
-          <p className="text-xl text-muted-foreground mt-1">
+          <h1 className="text-2xl md:text-3xl font-bold">{scenario.name}</h1>
+          <p className="text-lg md:text-xl text-muted-foreground mt-1">
             {scenario.nameKo}
           </p>
         </div>

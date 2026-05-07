@@ -19,23 +19,26 @@ export function Header() {
   return (
     <header className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
       <div className="container mx-auto px-4 flex h-14 items-center justify-between">
-        <div className="flex items-center space-x-4">
-          <h1 className="text-lg font-bold">말해봐</h1>
-          <Badge variant={user.plan === "PREMIUM" ? "default" : user.plan === "STANDARD" ? "secondary" : "outline"}>
+        <div className="flex items-center space-x-2 md:space-x-4">
+          <h1 className="text-base md:text-lg font-bold">말해봐</h1>
+          <Badge
+            variant={user.plan === "PREMIUM" ? "default" : user.plan === "STANDARD" ? "secondary" : "outline"}
+            className="hidden sm:inline-flex"
+          >
             {user.plan}
           </Badge>
         </div>
 
-        <div className="flex items-center space-x-4">
-          <div className="text-sm">
-            <span className="text-muted-foreground">今日の会話:</span>
-            <span className="ml-2 font-semibold">
+        <div className="flex items-center space-x-2 md:space-x-4">
+          <div className="text-xs md:text-sm">
+            <span className="text-muted-foreground hidden sm:inline">今日の会話:</span>
+            <span className="ml-1 md:ml-2 font-semibold">
               {dailyCount} / {limit}
             </span>
           </div>
-          <div className="text-sm">
-            <span className="text-muted-foreground">レベル:</span>
-            <span className="ml-2 font-semibold">Lv.{user.level}</span>
+          <div className="text-xs md:text-sm">
+            <span className="text-muted-foreground hidden sm:inline">レベル:</span>
+            <span className="ml-1 md:ml-2 font-semibold">Lv.{user.level}</span>
           </div>
         </div>
       </div>

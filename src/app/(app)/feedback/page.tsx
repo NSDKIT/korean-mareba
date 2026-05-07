@@ -51,12 +51,12 @@ export default function FeedbackPage() {
   };
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-4 md:space-y-6">
       {/* 総合評価 */}
       <Card className="border-primary/20 bg-primary/5">
         <CardHeader>
-          <div className="flex items-center justify-between">
-            <CardTitle className="text-2xl">会話フィードバック</CardTitle>
+          <div className="flex items-center justify-between gap-2">
+            <CardTitle className="text-lg md:text-2xl">会話フィードバック</CardTitle>
             <Badge
               variant={
                 feedback.totalScore >= 80
@@ -65,7 +65,7 @@ export default function FeedbackPage() {
                   ? "secondary"
                   : "outline"
               }
-              className="text-lg px-3 py-1"
+              className="text-base md:text-lg px-2 md:px-3 py-1 flex-shrink-0"
             >
               {feedback.totalScore}点
             </Badge>
@@ -140,19 +140,19 @@ export default function FeedbackPage() {
             改善できる点
           </CardTitle>
         </CardHeader>
-        <CardContent className="space-y-4">
+        <CardContent className="space-y-3 md:space-y-4">
           {feedback.improvements.map((item, index) => (
-            <div key={index} className="rounded-lg border p-4 space-y-2">
+            <div key={index} className="rounded-lg border p-3 md:p-4 space-y-2">
               <div>
-                <p className="text-sm text-muted-foreground">あなたの表現:</p>
-                <p className="font-medium text-destructive">{item.original}</p>
+                <p className="text-xs md:text-sm text-muted-foreground">あなたの表現:</p>
+                <p className="font-medium text-sm md:text-base text-destructive">{item.original}</p>
               </div>
               <div>
-                <p className="text-sm text-muted-foreground">改善案:</p>
-                <p className="font-medium text-green-600">{item.suggestion}</p>
+                <p className="text-xs md:text-sm text-muted-foreground">改善案:</p>
+                <p className="font-medium text-sm md:text-base text-green-600">{item.suggestion}</p>
               </div>
               <div className="rounded bg-muted p-2">
-                <p className="text-sm">{item.explanation}</p>
+                <p className="text-xs md:text-sm">{item.explanation}</p>
               </div>
             </div>
           ))}
@@ -171,12 +171,12 @@ export default function FeedbackPage() {
           </CardDescription>
         </CardHeader>
         <CardContent>
-          <div className="space-y-3">
+          <div className="space-y-2 md:space-y-3">
             {feedback.newWords.map((word, index) => (
               <div key={index} className="rounded-lg border p-3 space-y-1">
-                <p className="font-medium text-lg">{word.ko}</p>
-                <p className="text-sm text-muted-foreground">{word.ruby}</p>
-                <p className="text-sm">{word.ja}</p>
+                <p className="font-medium text-base md:text-lg">{word.ko}</p>
+                <p className="text-xs md:text-sm text-muted-foreground">{word.ruby}</p>
+                <p className="text-xs md:text-sm">{word.ja}</p>
               </div>
             ))}
           </div>
@@ -184,20 +184,22 @@ export default function FeedbackPage() {
       </Card>
 
       {/* アクションボタン */}
-      <div className="grid gap-3 md:grid-cols-2">
+      <div className="grid gap-2 md:gap-3 md:grid-cols-2">
         <Button
-          size="lg"
+          size="default"
           variant="outline"
           onClick={() => router.push("/home")}
+          className="md:text-base"
         >
-          <Home className="mr-2 h-5 w-5" />
+          <Home className="mr-2 h-4 w-4 md:h-5 md:w-5" />
           ホームに戻る
         </Button>
         <Button
-          size="lg"
+          size="default"
           onClick={() => router.push("/scenarios")}
+          className="md:text-base"
         >
-          <MessageSquare className="mr-2 h-5 w-5" />
+          <MessageSquare className="mr-2 h-4 w-4 md:h-5 md:w-5" />
           もう一度練習する
         </Button>
       </div>

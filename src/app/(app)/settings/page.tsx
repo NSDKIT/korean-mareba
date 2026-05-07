@@ -90,10 +90,10 @@ export default function SettingsPage() {
   };
 
   return (
-    <div className="space-y-6">
-      <div className="space-y-2">
-        <h1 className="text-3xl font-bold">設定</h1>
-        <p className="text-muted-foreground">
+    <div className="space-y-4 md:space-y-6">
+      <div className="space-y-1 md:space-y-2">
+        <h1 className="text-xl md:text-3xl font-bold">設定</h1>
+        <p className="text-sm md:text-base text-muted-foreground">
           アカウントとプランの管理
         </p>
       </div>
@@ -143,12 +143,12 @@ export default function SettingsPage() {
 
       {/* プラン比較 */}
       <div>
-        <div className="flex items-center gap-2 mb-4">
-          <CreditCard className="h-5 w-5" />
-          <h2 className="text-xl font-bold">プラン変更</h2>
+        <div className="flex items-center gap-2 mb-3 md:mb-4">
+          <CreditCard className="h-4 w-4 md:h-5 md:w-5" />
+          <h2 className="text-lg md:text-xl font-bold">プラン変更</h2>
         </div>
 
-        <div className="grid gap-4 md:grid-cols-3">
+        <div className="grid gap-3 md:gap-4 md:grid-cols-3">
           {Object.entries(PLANS).map(([key, plan]) => {
             const isCurrentPlan = user?.plan === key;
             const isPremium = key === "PREMIUM";
@@ -170,27 +170,27 @@ export default function SettingsPage() {
                 )}
 
                 <CardHeader>
-                  <CardTitle>{plan.name}</CardTitle>
+                  <CardTitle className="text-base md:text-lg">{plan.name}</CardTitle>
                   <CardDescription>
-                    <span className="text-3xl font-bold text-foreground">
+                    <span className="text-2xl md:text-3xl font-bold text-foreground">
                       {plan.price}
                     </span>
                     {key !== "FREE" && (
-                      <span className="text-muted-foreground">/月</span>
+                      <span className="text-muted-foreground text-sm md:text-base">/月</span>
                     )}
                   </CardDescription>
                   {key !== "FREE" && "priceYearly" in plan && (
-                    <p className="text-xs text-muted-foreground">
+                    <p className="text-[10px] md:text-xs text-muted-foreground">
                       年払い: {plan.priceYearly}（2ヶ月分お得）
                     </p>
                   )}
                 </CardHeader>
 
-                <CardContent className="space-y-4">
-                  <ul className="space-y-2">
+                <CardContent className="space-y-3 md:space-y-4">
+                  <ul className="space-y-1.5 md:space-y-2">
                     {plan.features.map((feature, index) => (
-                      <li key={index} className="flex items-start gap-2 text-sm">
-                        <Check className="h-4 w-4 text-primary mt-0.5 flex-shrink-0" />
+                      <li key={index} className="flex items-start gap-2 text-xs md:text-sm">
+                        <Check className="h-3 w-3 md:h-4 md:w-4 text-primary mt-0.5 flex-shrink-0" />
                         <span>{feature}</span>
                       </li>
                     ))}
@@ -211,7 +211,8 @@ export default function SettingsPage() {
                   ) : (
                     <div className="space-y-2">
                       <Button
-                        className="w-full"
+                        className="w-full text-xs md:text-sm"
+                        size="sm"
                         onClick={() =>
                           handleUpgrade(key as "STANDARD" | "PREMIUM", "monthly")
                         }
@@ -221,7 +222,8 @@ export default function SettingsPage() {
                       </Button>
                       <Button
                         variant="outline"
-                        className="w-full"
+                        className="w-full text-xs md:text-sm"
+                        size="sm"
                         onClick={() =>
                           handleUpgrade(key as "STANDARD" | "PREMIUM", "yearly")
                         }

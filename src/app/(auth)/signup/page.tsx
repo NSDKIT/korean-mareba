@@ -55,8 +55,8 @@ export default function SignupPage() {
     <div className="flex min-h-screen items-center justify-center p-4">
       <Card className="w-full max-w-md">
         <CardHeader className="space-y-1">
-          <CardTitle className="text-3xl font-bold text-center">말해봐</CardTitle>
-          <CardDescription className="text-center">
+          <CardTitle className="text-2xl md:text-3xl font-bold text-center">말해봐</CardTitle>
+          <CardDescription className="text-center text-sm md:text-base">
             新規アカウント登録
           </CardDescription>
         </CardHeader>

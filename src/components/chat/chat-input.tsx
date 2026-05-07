@@ -44,9 +44,9 @@ export function ChatInput({
       <Input
         value={input}
         onChange={(e) => setInput(e.target.value)}
-        placeholder="メッセージを入力..."
+        placeholder="入力..."
         disabled={disabled || isListening}
-        className="flex-1"
+        className="flex-1 text-sm md:text-base"
       />
 
       {onStartListening && (
