@@ -1,6 +1,7 @@
 import type { Scenario, LevelConfig } from '@/types';
 
-export const scenarios: Record<string, Scenario> = {
+// Note: DEMO MODE用に編集可能にするためletを使用（本番環境ではDBに保存）
+export let scenarios: Record<string, Scenario> = {
   cafe: {
     id: 'cafe',
     name: 'カフェで注文',
